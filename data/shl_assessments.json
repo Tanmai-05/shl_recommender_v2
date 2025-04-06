@@ -1,0 +1,66 @@
+[
+    {
+      "name": "Verify Interactive - JavaScript",
+      "url": "https://www.shl.com/solutions/products/verify-interactive/",
+      "remote_testing": "Yes",
+      "adaptive": "No",
+      "duration": "60 minutes",
+      "test_type": "Technical",
+      "description": "Comprehensive JavaScript evaluation covering ES6+, React, Node.js, and DOM manipulation with live coding exercises",
+      "skills": ["JavaScript", "Frontend", "Web Development", "React", "Node.js"],
+      "keywords": ["JS", "web", "coding", "programming", "front-end"]
+    },
+    {
+      "name": "Verify Interactive - Python",
+      "url": "https://www.shl.com/solutions/products/verify-interactive/",
+      "remote_testing": "Yes",
+      "adaptive": "No",
+      "duration": "60 minutes",
+      "test_type": "Technical",
+      "description": "Python coding assessment testing algorithms, data structures (OOP), and frameworks (Django/Flask) with real-world problems",
+      "skills": ["Python", "Algorithms", "Data Structures", "Django", "Flask"],
+      "keywords": ["backend", "scripting", "automation"]
+    },
+    {
+      "name": "Full-Stack Developer Assessment",
+      "url": "https://www.shl.com/solutions/products/full-stack/",
+      "remote_testing": "Yes",
+      "adaptive": "Yes",
+      "duration": "90 minutes",
+      "test_type": "Technical",
+      "description": "Combined evaluation of JavaScript (React), Python (FastAPI), database design, and system architecture",
+      "skills": ["JavaScript", "Python", "React", "SQL", "System Design"],
+      "keywords": ["web", "fullstack", "developer", "API", "REST"]
+    },
+    {
+      "name": "Cognitive Ability Test Pro",
+      "url": "https://www.shl.com/solutions/products/cognitive-ability/",
+      "remote_testing": "Yes",
+      "adaptive": "Yes",
+      "duration": "45 minutes",
+      "test_type": "Cognitive",
+      "description": "Advanced problem-solving assessment covering numerical reasoning, logical puzzles, and pattern recognition for tech roles",
+      "keywords": ["logic", "reasoning", "IQ", "aptitude"]
+    },
+    {
+      "name": "Technical Problem Solving",
+      "url": "https://www.shl.com/solutions/products/technical-problem-solving/",
+      "remote_testing": "Yes",
+      "adaptive": "No",
+      "duration": "50 minutes",
+      "test_type": "Technical",
+      "description": "Debugging complex JavaScript/Python codebases and optimizing system architecture",
+      "skills": ["Debugging", "Optimization", "System Design"],
+      "keywords": ["errors", "fixing", "performance", "scalability"]
+    },
+    {
+      "name": "Developer Personality Profile",
+      "url": "https://www.shl.com/solutions/products/developer-personality/",
+      "remote_testing": "Yes",
+      "adaptive": "No",
+      "duration": "30 minutes",
+      "test_type": "Behavioral",
+      "description": "Evaluates collaboration style, communication preferences, and problem-solving approaches in technical teams",
+      "keywords": ["soft skills", "teamwork", "communication"]
+    }
+  ]
