@@ -68,7 +68,10 @@ async def recommend(request: RecommendationRequest):
 
 # Function to run the Streamlit app in a separate process
 def run_streamlit():
-    subprocess.run(["streamlit", "run", "streamlit_app.py"])
+    try:
+        subprocess.run(["streamlit", "run", "streamlit_app.py", "--server.port", "8502"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error starting Streamlit app: {e}")
 
 # Start the Streamlit app in a separate thread
 streamlit_thread = threading.Thread(target=run_streamlit)
