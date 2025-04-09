@@ -22,7 +22,7 @@ def recommend_assessments(query, max_results=5):
     assessments = load_assessments()
     
     # Build prompt with assessment details
-    assessment_text = "\n".join([
+    assessment_text = "\n".join([ 
         f"{idx+1}. {a['name']}: {a.get('description', '')} "
         f"(Skills: {', '.join(a.get('skills', ['General']))} | "
         f"Duration: {a['duration']} | Type: {a['test_type']})"
@@ -56,8 +56,3 @@ def recommend_assessments(query, max_results=5):
     except Exception as e:
         print(f"Recommendation error: {e}")
         return []
-
-# For quick testing
-if __name__ == "__main__":
-    print("Testing with 'JavaScript test':")
-    print(recommend_assessments("JavaScript test"))
