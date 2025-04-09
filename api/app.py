@@ -2,7 +2,7 @@ import subprocess
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from recommend import recommend_assessments
+from api.recommend import recommend_assessments  # Corrected import
 import threading
 import socket
 
@@ -93,4 +93,3 @@ def run_streamlit():
 # Start the Streamlit app in a separate thread
 streamlit_thread = threading.Thread(target=run_streamlit)
 streamlit_thread.start()
-
