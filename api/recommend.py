@@ -2,10 +2,18 @@ import json
 import google.generativeai as genai
 from pathlib import Path
 import sys
+import re  # Import regex module for parsing duration
 
 # Configure Gemini with your API key (Method 1)
 genai.configure(api_key="AIzaSyDitT4ynqqynhUAJwagX-RRXJcQy5IFaN0")  # Your key here
 model = genai.GenerativeModel('gemini-1.5-pro-latest')  # Updated model name
+
+def parse_duration(duration: str):
+    """Extract numeric value from a string like '60 minutes' or '30 mins'."""
+    match = re.search(r'(\d+)', duration)
+    if match:
+        return int(match.group(1))  # Return the numeric part
+    return 0  # Default if no numeric value found
 
 def load_assessments():
     """Load assessments from JSON file with error handling"""
@@ -22,7 +30,7 @@ def recommend_assessments(query, max_results=5):
     assessments = load_assessments()
     
     # Build prompt with assessment details
-    assessment_text = "\n".join([ 
+    assessment_text = "\n".join([
         f"{idx+1}. {a['name']}: {a.get('description', '')} "
         f"(Skills: {', '.join(a.get('skills', ['General']))} | "
         f"Duration: {a['duration']} | Type: {a['test_type']})"
@@ -51,6 +59,11 @@ def recommend_assessments(query, max_results=5):
             for i in response.text.split(",") 
             if i.strip().isdigit() and 0 <= int(i.strip())-1 < len(assessments)
         ]
+        
+        # Parse the duration field here to handle string durations like '60 minutes'
+        for i in selected_indices:
+            assessments[i]['duration'] = parse_duration(assessments[i].get('duration', '0'))
+
         return [assessments[i] for i in selected_indices[:max_results]]
     
     except Exception as e:
