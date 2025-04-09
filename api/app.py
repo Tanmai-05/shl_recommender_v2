@@ -11,7 +11,7 @@ app = FastAPI()
 # Add CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Allow all origins (change in production)
     allow_methods=["*"],
     allow_headers=["*"]
 )
@@ -68,10 +68,7 @@ async def recommend(request: RecommendationRequest):
 
 # Function to run the Streamlit app in a separate process
 def run_streamlit():
-    try:
-        subprocess.run(["streamlit", "run", "streamlit_app.py", "--server.port", "8502"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error starting Streamlit app: {e}")
+    subprocess.run(["streamlit", "run", "api/streamlit_app.py", "--server.port", "8502"], check=True)
 
 # Start the Streamlit app in a separate thread
 streamlit_thread = threading.Thread(target=run_streamlit)
