@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import List  # Import List for type hinting
 from recommend import recommend_assessments
 
 # Define FastAPI app
@@ -31,11 +32,11 @@ class RecommendedAssessment(BaseModel):
     description: str
     duration: int
     remote_support: str
-    test_type: list
+    test_type: List[str]  # Specify List[str] for better clarity
 
 # Define the response model for the overall recommendations
 class RecommendationsResponse(BaseModel):
-    recommended_assessments: list[RecommendedAssessment]
+    recommended_assessments: List[RecommendedAssessment]  # List of recommendations
 
 # Main recommendation endpoint (POST request)
 @app.post("/recommend", response_model=RecommendationsResponse)
@@ -55,7 +56,7 @@ async def get_recommendations(query: QueryRequest):
                 description=a.get("description", ""),
                 duration=a.get("duration", 0),
                 remote_support=a.get("remote_support", "No"),
-                test_type=a.get("test_type", [])
+                test_type=a.get("test_type", [])  # Assuming 'test_type' is a list
             )
             for a in results[:10]  # Limit to 10 recommendations
         ]
@@ -64,3 +65,4 @@ async def get_recommendations(query: QueryRequest):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
+
