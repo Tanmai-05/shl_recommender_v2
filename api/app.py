@@ -23,7 +23,7 @@ def health_check():
 class RecommendationRequest(BaseModel):
     query: str
 
-# Define the response model for recommendations
+# Define the response model for individual recommended assessments
 class RecommendedAssessment(BaseModel):
     url: str
     adaptive_support: str
@@ -32,12 +32,19 @@ class RecommendedAssessment(BaseModel):
     remote_support: str
     test_type: list
 
+# Define the response model for the overall recommendations
+class RecommendationsResponse(BaseModel):
+    recommended_assessments: list[RecommendedAssessment]
+
 # Main recommendation endpoint (POST request)
-@app.post("/recommend", response_model=dict)
+@app.post("/recommend", response_model=RecommendationsResponse)
 async def recommend(request: RecommendationRequest):
     try:
         # Get the recommendations based on the query
         results = recommend_assessments(request.query)
+
+        if not results:
+            raise HTTPException(status_code=404, detail="No recommendations found.")
 
         # Ensure to return a max of 10 recommendations
         recommendations = [
@@ -52,8 +59,7 @@ async def recommend(request: RecommendationRequest):
             for test in results[:10]  # Limit to 10 recommendations
         ]
 
-        return {"recommended_assessments": recommendations}
+        return RecommendationsResponse(recommended_assessments=recommendations)
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
-
