@@ -1,7 +1,9 @@
+import subprocess
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from recommend import recommend_assessments
+import threading
 
 # Define the FastAPI app
 app = FastAPI()
@@ -63,3 +65,11 @@ async def recommend(request: RecommendationRequest):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
+
+# Function to run the Streamlit app in a separate process
+def run_streamlit():
+    subprocess.run(["streamlit", "run", "streamlit_app.py"])
+
+# Start the Streamlit app in a separate thread
+streamlit_thread = threading.Thread(target=run_streamlit)
+streamlit_thread.start()
