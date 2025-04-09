@@ -28,7 +28,7 @@ def load_assessments():
 def recommend_assessments(query, max_results=5):
     """Get recommendations with enhanced error handling"""
     assessments = load_assessments()
-    
+
     # Build prompt with assessment details
     assessment_text = "\n".join([
         f"{idx+1}. {a['name']}: {a.get('description', '')} "
@@ -53,19 +53,31 @@ def recommend_assessments(query, max_results=5):
     """
     
     try:
+        # Generate response from model
         response = model.generate_content(prompt)
+        print(f"Response from model: {response.text}")  # Debug: Print model's response
+        
+        # Split the response text into indices
         selected_indices = [
             int(i.strip())-1 
             for i in response.text.split(",") 
             if i.strip().isdigit() and 0 <= int(i.strip())-1 < len(assessments)
         ]
         
+        print(f"Selected indices: {selected_indices}")  # Debug: Print selected indices
+
+        # If selected indices are empty, it means no valid results were returned
+        if not selected_indices:
+            print(f"No valid recommendations found for the query: {query}")
+        
         # Parse the duration field here to handle string durations like '60 minutes'
         for i in selected_indices:
             assessments[i]['duration'] = parse_duration(assessments[i].get('duration', '0'))
-
+        
+        # Return top recommendations (max_results)
         return [assessments[i] for i in selected_indices[:max_results]]
     
     except Exception as e:
         print(f"Recommendation error: {e}")
         return []
+
